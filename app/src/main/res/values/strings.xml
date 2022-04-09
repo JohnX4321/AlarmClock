@@ -1,0 +1,153 @@
+<resources>
+    <string name="app_name">Clock</string>
+
+    <!-- Navigation bar titles -->
+    <string name="navigation_clock">Clock</string>
+    <string name="navigation_alarm_clock">Alarm Clock</string>
+    <string name="navigation_timer">Timer</string>
+    <string name="navigation_stopwatch">Stopwatch</string>
+    <string name="navigation_settings">Settings</string>
+
+    <!-- Main Screen -->
+    <string-array name="days_of_week">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <!-- Alarm Screen -->
+
+    <!-- Create alarm screen -->
+    <string name="SundayButton">S</string>
+    <string name="MondayButton">M</string>
+    <string name="TuesdayButton">T</string>
+    <string name="WednesdayButton">W</string>
+    <string name="ThursdayButton">T</string>
+    <string name="FridayButton">F</string>
+    <string name="SaturdayButton">S</string>
+
+    <string name="AlarmDescription">Alarm Description</string>
+    <string name="AlarmDescriptionHint">None</string>
+
+    <string name="SaveButton">Save</string>
+    <string name="CancelButton">Cancel</string>
+
+    <!-- Timer Screen -->
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+
+    <!-- Setting Screen -->
+    <string name="time_format">Time Format</string>
+    <string name="show_days_of_week">Show Days of Week</string>
+    <string name="show_date">Show Date</string>
+
+    <!-- Buttons -->
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="resume">Resume</string>
+    <string name="reset">Reset</string>
+
+    <!-- Pop-up dialog window -->
+    <string name="alarm_dialog_title">Alarm</string>
+    <string name="alarm_dialog_dismiss">Dismiss</string>
+    <string name="alarm_dialog_snooze">Snooze</string>
+    <string name="night_mode">Night Mode</string>
+
+    <!-- Shown in settings - snooze timeout-->
+    <string name="snooze_summary">Select timeout for snooze</string>
+    <string name="snooze_title">Snooze Time</string>
+    <string-array name="snooze_length_entries">
+        <item>1 Minute</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>15 Minutes</item>
+        <item>20 Minutes</item>
+        <item>25 Minutes</item>
+        <item>30 Minutes</item>
+    </string-array>
+    <string-array name="snooze_length_values" translatable="false">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+    <!-- Shown in settings - silence timeout-->
+    <string name="silence_summary">Silence alarm after (minutes)</string>
+    <string name="silence_title">Silence Timeout</string>
+    <string-array name="silence_timeout_entries">
+        <item>Never</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>15 Minutes</item>
+    </string-array>
+    <string-array name="silence_timeout_values" translatable="false">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+    </string-array>
+
+    <!-- Shown in settings - crescendo time-->
+    <string name="crescendo_summary">Alarm volume will increase slowly</string>
+    <string name="crescendo_title">Gradually increase volume</string>
+    <string-array name="crescendo_entries">
+        <item>Off</item>
+        <item>5 Seconds</item>
+        <item>10 Seconds</item>
+        <item>15 Seconds</item>
+        <item>20 Seconds</item>
+        <item>30 Seconds</item>
+        <item>40 Seconds</item>
+        <item>50 Seconds</item>
+        <item>60 Seconds</item>
+    </string-array>
+    <string-array name="crescendo_values" translatable="false">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+    </string-array>
+
+    <!-- Shown in settings - buttons-->
+    <string name="buttons_summary">Select what buttons do</string>
+    <string name="buttons_title">Buttons</string>
+    <string-array name="button_action_entries">
+        <item>Do Nothing</item>
+        <item>Mute</item>
+        <item>Dismiss</item>
+        <item>Snooze</item>
+    </string-array>
+    <string-array name="button_action_values" translatable="false">
+        <item>com.tzapps.alarm.DO_NOTHING</item>
+        <item>com.tzapps.alarm.MUTE</item>
+        <item>com.tzapps.alarm.DISMISS</item>
+        <item>com.tzapps.alarm.SNOOZE</item>
+    </string-array>
+
+    <string name="ringtone_summary">Select the default alarm ring sound</string>
+    <string name="ringtone_title">Choose ringtone</string>
+    <string name="vibrate_summary">Vibrate with alarm</string>
+    <string name="vibrate_title">Enable vibration</string>
+    <string name="rating_summary">Leave a rating on Google Play</string>
+    <string name="rating_title">Rate Alarmzy</string>
+    <string name="volume_button">Volume button</string>
+    <string name="power_button">Power button</string>
+    <string name="night_mode_summary">Enable Night Mode</string>
+    <string name="twentyfour_summary">24 Hour Time representation</string>
+    <string name="twentyfour_title">24 Hours Format</string>
+
+</resources>

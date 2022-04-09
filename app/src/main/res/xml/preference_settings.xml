@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@android:drawable/ic_menu_day"
+        android:key="nightMode"
+        android:summary="@string/night_mode_summary"
+        android:title="@string/night_mode" />
+
+    <ListPreference
+        android:entries="@array/snooze_length_entries"
+        android:entryValues="@array/snooze_length_values"
+        android:icon="@drawable/ic_snooze"
+        android:key="snoozeLength"
+        android:summary="@string/snooze_summary"
+        android:title="@string/snooze_title"
+        app:defaultValue="10" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/silence_timeout_entries"
+        android:entryValues="@array/silence_timeout_values"
+        android:icon="@drawable/ic_silence"
+        android:key="silenceTimeout"
+        android:summary="@string/silence_summary"
+        android:title="@string/silence_title" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/crescendo_entries"
+        android:entryValues="@array/crescendo_values"
+        android:icon="@drawable/ic_volume_down"
+        android:key="crescendoTime"
+        android:summary="@string/crescendo_summary"
+        android:title="@string/crescendo_title" />
+
+    <Preference
+        android:icon="@drawable/ic_volume_up"
+        android:key="ringtone"
+        android:summary="@string/ringtone_summary"
+        android:title="@string/ringtone_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_vibration"
+        android:key="vibrateEnabled"
+        android:summary="@string/vibrate_summary"
+        android:title="@string/vibrate_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_vibration"
+        android:key="is24Format"
+        android:summary="@string/twentyfour_summary"
+        android:title="@string/twentyfour_title" />
+
+
+    <Preference
+        android:icon="@drawable/ic_star"
+        android:key="rate"
+        android:summary="@string/rating_summary"
+        android:title="@string/rating_title">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://www.github.com/JohnX4321/Clock" />
+    </Preference>
+
+</PreferenceScreen>

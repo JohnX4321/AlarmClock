@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottom_bar"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/frag_alarm">
+
+    <fragment
+        android:id="@+id/frag_alarm"
+        android:name="com.tzapps.alarm.fragments.AlarmListFragment"
+        android:label="fragment_alarm"
+        tools:layout="@layout/fragment_alarm">
+        <action android:id="@+id/trans_alarm_to_clock"
+            app:destination="@id/frag_clock" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag_clock"
+        android:name="com.tzapps.alarm.fragments.ClockFragment"
+        tools:layout="@layout/fragment_alarm"
+        android:label="fragment_clock">
+        <action android:id="@+id/trans_clock_to_timer"
+            app:destination="@+id/frag_timer" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/frag_timer"
+        android:name="com.tzapps.alarm.fragments.TimerFragment"
+        tools:layout="@layout/fragment_timer"
+        android:label="fragment_timer">
+        <action android:id="@+id/trans_timer_to_stopwatch"
+            app:destination="@+id/frag_stop_watch" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag_stop_watch"
+        android:name="com.tzapps.alarm.fragments.StopwatchFragment"
+        tools:layout="@layout/fragment_stopwatch"
+        android:label="fragment_stopwatch">
+        <action android:id="@+id/trans_stopwatch_to_settings"
+            app:destination="@+id/frag_settings"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag_settings"
+        android:name="com.tzapps.alarm.fragments.SettingsFragment"
+        tools:layout="@layout/fragment_settings"
+        android:label="fragment_settings">
+        <action android:id="@+id/trans_settings_to_main"
+            app:destination="@+id/frag_alarm" />
+    </fragment>
+
+
+
+</navigation>
