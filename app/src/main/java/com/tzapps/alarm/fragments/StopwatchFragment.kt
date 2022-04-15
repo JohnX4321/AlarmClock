@@ -1,46 +1,58 @@
 package com.tzapps.alarm.fragments
 
+import android.content.*
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.tzapps.alarm.ClockApp
 import com.tzapps.alarm.MainActivity
 import com.tzapps.alarm.R
 import com.tzapps.alarm.databinding.FragmentStopwatchBinding
+import com.tzapps.alarm.services.StopwatchService
+import com.tzapps.alarm.utils.AppConst
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class StopwatchFragment: Fragment() {
+class StopwatchFragment: Fragment(),StopwatchService.Companion.StopwatchCallback {
     
-    private lateinit var runnable: Runnable
-    private lateinit var binding: FragmentStopwatchBinding
-    var thread: Thread?=null
-    var uiState=0
-    var hours=0
-    var min=0
-    var sec=0
-    var isRunning=false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        runnable=CountDownRunner()
-        thread=Thread(runnable)
+    companion object {
+        private var f: StopwatchFragment? = null
+        fun getInstance() : StopwatchFragment {
+            if (f==null)
+                f= StopwatchFragment()
+            return f!!
+        }
     }
 
-    inner class CountDownRunner: Runnable {
-        override fun run() {
-            while (!Thread.currentThread().isInterrupted) {
-                try{
-                    startCount()
-                    Thread.sleep(1000)
-                } catch (e: InterruptedException){
-                    Thread.currentThread().interrupt()
-                } catch (e: Exception) {}
-            }
+    private lateinit var binding: FragmentStopwatchBinding
+    private var boundService: StopwatchService? = null
+    private val stopwatchServiceIntent = Intent(ClockApp.context,StopwatchService::class.java)
+
+    var uiState=0
+    var isRunning=false
+    private val stopwatchServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val localBinder = service as StopwatchService.ServiceBinder
+            boundService = localBinder.getService()
+            boundService?.callback = this@StopwatchFragment
+            Log.d("SVC","Binder connected")
         }
 
+        override fun onServiceDisconnected(name: ComponentName?) {
+
+        }
     }
+
+
 
     override fun onPause() {
         super.onPause()
@@ -49,7 +61,6 @@ class StopwatchFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         updateUI(uiState)
-        setStopwatchText(hours,min,sec)
     }
 
     private fun formatNumber(num: Int) = if (num<10) "0$num" else "$num"
@@ -59,9 +70,6 @@ class StopwatchFragment: Fragment() {
             0->{
                 isRunning=false
                 binding.stopWatchFrame.text="00:00:00"
-                sec=0
-                hours=0
-                min=0
                 binding.startStopButton.text=getString(R.string.start)
                 binding.startStopButton.visibility=View.VISIBLE
                 binding.resumeButton.visibility=View.INVISIBLE
@@ -88,50 +96,71 @@ class StopwatchFragment: Fragment() {
         binding.stopWatchFrame.text=formatNumber(h)+":"+formatNumber(m)+":"+formatNumber(s)
     }
 
-    private fun startCount(){
-        requireActivity().runOnUiThread {
-            try{
-                sec++
-                if (sec==60) {
-                    sec=0
-                    min++
-                }
-                if (min==60) {
-                    min=0
-                    hours++
-                }
-                setStopwatchText(hours,min,sec)
-            } catch (e: Exception) {e.printStackTrace()}
+    val StopWatchReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?: return
+            if (intent.action==AppConst.ACTION_PAUSE_STOPWATCH) {
+                binding.startStopButton.performClick()
+            }
+            else if (intent.action==AppConst.ACTION_RESUME_STOPWATCH) {
+                binding.resumeButton.performClick()
+            }
+            else if (intent.action==AppConst.ACTION_CANCEL_STOPWATCH) {
+                binding.resetButton.performClick()
+            }
         }
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().registerReceiver(StopWatchReceiver,IntentFilter()
+            .apply
+         {
+             addAction(AppConst.ACTION_PAUSE_STOPWATCH)
+             addAction(AppConst.ACTION_RESUME_STOPWATCH)
+             addAction(AppConst.ACTION_CANCEL_STOPWATCH)
+         })
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onDestroy() {
+        requireActivity().unregisterReceiver(StopWatchReceiver)
+        super.onDestroy()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentStopwatchBinding.inflate(inflater)
         (requireActivity() as MainActivity).showNav()
         binding.startStopButton.setOnClickListener {
             if (!isRunning) {
-                thread?.start()
+                ContextCompat.startForegroundService(ClockApp.context,stopwatchServiceIntent)
+                requireActivity().bindService(stopwatchServiceIntent,stopwatchServiceConnection,Context.BIND_AUTO_CREATE)
                 updateUI(1)
             } else {
-                thread?.interrupt()
+                boundService?.stopThread()
                 updateUI(2)
+                boundService?.updateNotification()
             }
         }
         binding.resumeButton.setOnClickListener {
-            runnable=CountDownRunner()
-            thread=Thread(runnable)
-            thread?.start()
+            boundService?.startThread();
             updateUI(1)
+            boundService?.updateNotification()
         }
         binding.resetButton.setOnClickListener {
-            thread?.interrupt()
-            runnable=CountDownRunner()
-            thread= Thread(runnable)
+            boundService?.stopThread()
+            boundService?.resetNotification()
             updateUI(0)
+            requireActivity().unbindService(stopwatchServiceConnection)
+            requireActivity().stopService(stopwatchServiceIntent)
         }
 
         return binding.root
     }
+
+    override fun updateUIText(h: Int, m: Int, s: Int) {
+        setStopwatchText(h, m, s)
+    }
+
+
 
 
 }

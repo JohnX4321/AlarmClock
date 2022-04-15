@@ -29,6 +29,11 @@ object AppConst {
     const val RECURRING="RECURRING"
     const val TITLE="TITLE"
 
+    const val KEY_FRAG_ID="FRAGID"
+    const val ACTION_PAUSE_STOPWATCH="com.thingsenz.alarm.PAUSE"
+    const val ACTION_RESUME_STOPWATCH="com.thingsenz.alarm.RESUME"
+    const val ACTION_CANCEL_STOPWATCH="com.thingsenz.alarm.STOP"
+
     val PRIMARY_TIMEZONES = arrayOf(
         "Africa/Algiers",
         "Africa/Cairo",

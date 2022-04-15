@@ -67,4 +67,13 @@ class AlarmListFragment: Fragment(), OnToggleAlarmListener {
         }
     }
 
+    companion object {
+        private var f: AlarmListFragment? = null
+        fun getInstance() : AlarmListFragment {
+            if (f==null)
+                f= AlarmListFragment()
+            return f!!
+        }
+    }
+
 }

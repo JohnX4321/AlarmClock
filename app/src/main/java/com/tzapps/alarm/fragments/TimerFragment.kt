@@ -17,9 +17,18 @@ import java.util.concurrent.TimeUnit
 
 class TimerFragment(): Fragment() {
 
+    companion object {
+        private var f: TimerFragment? = null
+        fun getInstance() : TimerFragment {
+            if (f==null)
+                f= TimerFragment()
+            return f!!
+        }
+    }
     
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var binding: FragmentTimerBinding
+
 
     var secFromNP=0
     var minFromNP=0

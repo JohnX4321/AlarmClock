@@ -24,6 +24,15 @@ import com.tzapps.alarm.utils.Prefs
 
 class SettingsFragment: PreferenceFragmentCompat() {
 
+    companion object {
+        private var f: SettingsFragment? = null
+        fun getInstance() : SettingsFragment {
+            if (f==null)
+                f= SettingsFragment()
+            return f!!
+        }
+    }
+
     private lateinit var snoozePreference: ListPreference
     private lateinit var timeoutPreference: ListPreference
     private lateinit var crescendoPreference: ListPreference

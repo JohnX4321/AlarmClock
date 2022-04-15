@@ -33,6 +33,15 @@ import kotlin.collections.ArrayList
 
 class ClockFragment: Fragment() {
 
+    companion object {
+        private var f: ClockFragment? = null
+        fun getInstance() : ClockFragment {
+            if (f==null)
+                f= ClockFragment()
+            return f!!
+        }
+    }
+
     private var currDay=""
     private var currDate=""
     private var currTime=""
@@ -108,5 +117,7 @@ class ClockFragment: Fragment() {
         zoneAdapter.notifyItemRemoved(pos)
         zoneClockViewModel.delete(item)
     }
+
+
 
 }
